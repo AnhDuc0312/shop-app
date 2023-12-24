@@ -8,6 +8,8 @@ import com.project.shopapp.models.User;
 import com.project.shopapp.repositories.OrderRepository;
 import com.project.shopapp.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.modelmapper.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -37,7 +40,7 @@ public class OrderService implements IOrderService{
         Order order = new Order();
         modelMapper.map(orderDTO,order);
         order.setUser(user);
-        order.setOrderDate(new Date());
+        order.setOrderDate(LocalDate.now());
         order.setStatus(OrderStatus.PENDING);
 
         LocalDate shippingDate = orderDTO.getShippingDate() == null ? LocalDate.now() : orderDTO.getShippingDate();
@@ -69,6 +72,7 @@ public class OrderService implements IOrderService{
 
         modelMapper.map(orderDTO,order);
         order.setUser(existingUser);
+
         return orderRepository.save(order);
 
     }
@@ -87,5 +91,10 @@ public class OrderService implements IOrderService{
     @Override
     public List<Order> findByUserId(Long userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Page<Order> getOrdersByKeyword(String keyword, Pageable pageable) {
+        return orderRepository.findByKeyword(keyword,pageable);
     }
 }

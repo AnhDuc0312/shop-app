@@ -1,0 +1,35 @@
+
+version: '3.7'
+services:
+  mysql8-container:
+    container_name: mysql8-container
+    image: mysql:8.2.0    
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: A@12032001
+      MYSQL_DATABASE: shopapp
+    ports:
+      - 3307:3306
+    volumes: 
+      - ./sql/shopapp.sql:/docker-entrypoint-initdb.d/init-script.sql
+    networks:
+      - shopapp-network
+
+  phpmyadmin8-container:
+    image: phpmyadmin/phpmyadmin    
+    container_name: phpmyadmin8-container
+    restart: always
+    depends_on:
+      - mysql8-container      
+    ports:
+      - "8100:80" #port mapping
+    environment:
+      PMA_HOST: mysql8-container #phpMyAdmin Host
+    networks:
+      - shopapp-network
+
+
+#docker-compose -f ./deployment.yaml up -d mysql8-container
+
+
+#docker-compose -f ./deployment.yaml up -d phpmyadmin8-container

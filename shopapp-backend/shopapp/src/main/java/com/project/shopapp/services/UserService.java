@@ -1,6 +1,7 @@
 package com.project.shopapp.services;
 
 import com.project.shopapp.components.JwtTokenUtil;
+import com.project.shopapp.dtos.UpdateUserDTO;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.exceptions.PermissionDenyException;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.zip.DataFormatException;
@@ -61,7 +63,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String login(String phoneNumber, String password) throws Exception{
+    public String login(String phoneNumber, String password , Long roleId) throws Exception{
 
         Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
         if (optionalUser.isEmpty()) {
@@ -83,5 +85,69 @@ public class UserService implements IUserService{
         //Authenticate with Java Spring security
         authenticationManager.authenticate(authenticationToken);
         return jwtTokenUtil.generateToken(existingUser);
+    }
+
+    @Override
+    public User getUserDetailsFromToken(String token) throws Exception {
+        if (jwtTokenUtil.isTokenExpired(token)) {
+            throw new Exception("Token is expired");
+        }
+        String phoneNumber = jwtTokenUtil.extractPhongNumber(token);
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+
+        if (user.isPresent()) {
+            return  user.get();
+        }else {
+            throw new Exception("User not found");
+        }
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(Long userId, UpdateUserDTO updateUserDTO) throws Exception {
+        // Find the existing user by userId
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+
+        // Check if the phone number is being changed and if it already exists for another user
+        String newPhoneNumber = updateUserDTO.getPhoneNumber();
+        if (!existingUser.getPhoneNumber().equals(newPhoneNumber) &&
+                userRepository.existsByPhoneNumber(newPhoneNumber)) {
+            throw new DataIntegrityViolationException("Phone number already exists");
+        }
+
+        // Update user information based on the DTO
+        if (updateUserDTO.getFullName() != null) {
+            existingUser.setFullName(updateUserDTO.getFullName());
+        }
+        if (newPhoneNumber != null) {
+            existingUser.setPhoneNumber(newPhoneNumber);
+        }
+        if (updateUserDTO.getAddress() != null) {
+            existingUser.setAddress(updateUserDTO.getAddress());
+        }
+        if (updateUserDTO.getDateOfBirth() != null) {
+            existingUser.setDateOfBirth(updateUserDTO.getDateOfBirth());
+        }
+        if (updateUserDTO.getFacebookAccountId() > 0) {
+            existingUser.setFacebookAccountId(updateUserDTO.getFacebookAccountId());
+        }
+        if (updateUserDTO.getGoogleAccountId() > 0) {
+            existingUser.setGoogleAccountId(updateUserDTO.getGoogleAccountId());
+        }
+
+        // Update the password if it is provided in the DTO
+        if (updateUserDTO.getPassword() != null
+                && !updateUserDTO.getPassword().isEmpty()) {
+            if(!updateUserDTO.getPassword().equals(updateUserDTO.getRetypePassword())) {
+                throw new DataNotFoundException("Password and retype password not the same");
+            }
+            String newPassword = updateUserDTO.getPassword();
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            existingUser.setPassword(encodedPassword);
+        }
+        //existingUser.setRole(updatedRole);
+        // Save the updated user
+        return userRepository.save(existingUser);
     }
 }

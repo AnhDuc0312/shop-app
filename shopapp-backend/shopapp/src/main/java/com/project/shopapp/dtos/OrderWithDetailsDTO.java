@@ -7,17 +7,15 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class OrderDTO {
-
+@Getter
+@Setter
+public class OrderWithDetailsDTO {
     @JsonProperty("user_id")
     @Min(value = 1, message = "User's ID must be > 0")
     private Long userId;
@@ -29,18 +27,15 @@ public class OrderDTO {
 
     @JsonProperty("phone_number")
     @NotBlank(message = "Phone number is required")
-    @Size(min = 5 , message = "Phone number must be at least 5 characters")
+    @Size(min = 5, message = "Phone number must be at least 5 characters")
     private String phoneNumber;
-
-    @JsonProperty("status")
-    private String status;
 
     private String address;
 
     private String note;
 
     @JsonProperty("total_money")
-    @Min(value = 0 , message = "Total money must be >= 0")
+    @Min(value = 0, message = "Total money must be >= 0")
     private Float totalMoney;
 
     @JsonProperty("shipping_method")
@@ -55,8 +50,6 @@ public class OrderDTO {
     @JsonProperty("payment_method")
     private String paymentMethod;
 
-    @JsonProperty("cart_item")
-    private List<CartItemDTO> cartItems;
-
-
+    @JsonProperty("order_details")
+    private List<OrderDetailDTO> orderDetailDTOS;
 }

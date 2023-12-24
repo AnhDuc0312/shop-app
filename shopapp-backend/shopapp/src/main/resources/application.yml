@@ -3,10 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/shopapp?useSSL=false&serverTimezone=UTC
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/shopapp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+#    jdbc:mysql://localhost:3307/shopapp?useSSL=false&serverTimezone=UTC
     drive-class-name: org.mariadb.jdbc.Driver
     username: root
-    password:
+    password: ${MYSQL_ROOT_PASSWORD:A@12032001}
   jpa:
     show-sql: true
     hibernate:
