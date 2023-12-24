@@ -1,7 +1,7 @@
 import { OrderDetail } from "./order.detail";
 
 export interface Order {
-    id: string;
+    id: number;
     user_id: number;
     fullname: string;
     email: string;
@@ -17,5 +17,5 @@ export interface Order {
     tracking_number:string;
     payment_method: string;
     active: boolean;
-    order_detail: OrderDetail;
+    order_detail: OrderDetail[];
 }

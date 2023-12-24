@@ -1,5 +1,5 @@
 export class OrderDTO {
-    user_id : string;
+    user_id : number;
 
     fullname: string;
 
@@ -21,9 +21,9 @@ export class OrderDTO {
 
     payment_method: string;
 
-    coupon: string;
+    coupon_code: string;
 
-    cart_item: { product_id : number, quantity :number  } [];
+    cart_items: { product_id : number, quantity :number  } [];
 
 
     constructor(data : any) {
@@ -37,8 +37,8 @@ export class OrderDTO {
         this.total_money = data.total_money;
         this.shipping_method = data.shipping_method;
         this.payment_method = data.payment_method;
-        this.coupon = data.coupon;
-        this.cart_item = data.cart_item;
+        this.coupon_code = data.coupon_code;
+        this.cart_items = data.cart_item;
     }
     
     

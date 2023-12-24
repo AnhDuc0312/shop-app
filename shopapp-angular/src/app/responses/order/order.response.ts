@@ -1,11 +1,11 @@
 import { OrderDetail } from "src/app/models/order.detail";
 
 export interface OrderResponse {
-    id: string;
+    id: number;
     user_id: number;
     fullname: string;
     email: string;
-    phong_number : string;
+    phone_number : string;
     address: string;
     note :string;
     order_date : Date;
@@ -15,5 +15,5 @@ export interface OrderResponse {
     shipping_address : string;
     shipping_date: Date;
     payment_method: string;
-    order_detail: OrderDetail;
+    order_details: OrderDetail[];
 }

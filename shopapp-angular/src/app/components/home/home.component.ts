@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit{
 
   onProductClick(productId: number){
     debugger
-    // this.router.navigate(['/detail-product', productId]);
+    this.router.navigate(['/products', productId]);
 
   }
 

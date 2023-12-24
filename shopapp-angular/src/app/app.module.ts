@@ -8,10 +8,17 @@ import { OrderConfirmComponent } from './components/order-confirm/order-confirm.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpClientModule } from '@angular/common/http'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AppComponent } from './app/app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserProfileComponent } from './components/user-profile/user.profile.component';
+import { OrderDetailComponent } from './components/detail-order/order.detail.component';
+import { CommonModule } from '@angular/common';
+import { AdminModule } from './components/admin/admin.module';
 
 
 
@@ -24,13 +31,21 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     OrderConfirmComponent,
     LoginComponent,
     RegisterComponent,
-    DetailProductComponent
+    OrderDetailComponent, 
+    DetailProductComponent,
+    UserProfileComponent,
+    AppComponent
   ],
   imports: [
   
-  BrowserModule,
+    CommonModule,
+    BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    NgbModule
+  
     
   ],
   providers: [{
@@ -39,12 +54,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     multi: true
   }],
   bootstrap: [
-    // HomeComponent
-    // OrderComponent
-    //OrderConfirmComponent
-    // RegisterComponent
-    // LoginComponent
-    DetailProductComponent
+    AppComponent
+    
   ]
 })
 export class AppModule { }
