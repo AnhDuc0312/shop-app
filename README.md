@@ -1,5 +1,9 @@
 # shop-app
 Trang web bán hàng được xây dựng bằng angular &amp; spring boot  
+    -  Xây dựng RESTfull API
+    -  Xây dựng ứng dụng Angular
+    -  Kết nối BE & FE
+    
 # Database 
   Run by Xammp :  
      - Create DB "shop-app"  
