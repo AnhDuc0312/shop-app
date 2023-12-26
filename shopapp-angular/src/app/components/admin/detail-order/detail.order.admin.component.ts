@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/service/order.service';
-import { Observable } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
 import { OrderResponse } from 'src/app/responses/order/order.response';
 import { OrderDetail } from 'src/app/models/order.detail';

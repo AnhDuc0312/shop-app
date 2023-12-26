@@ -8,10 +8,13 @@ import { NgModule } from "@angular/core";
 import { OrderDetailComponent } from "./components/detail-order/order.detail.component";
 import { UserProfileComponent } from "./components/user-profile/user.profile.component";
 import { AuthGuardFn } from "./guards/auth.guard";
+import { AdminGuard, AdminGuardFn } from "./guards/admin.guard";
+import { AdminComponent } from "./components/admin/admin.component";
 
 const routes: Routes = [
     { path:'', component: HomeComponent},
     { path:'login',component: LoginComponent},
+    { path:'admin',component:AdminComponent, canActivate:[AdminGuardFn]},
     { path:'register', component: RegisterComponent},
     { path:'products/:id', component: DetailProductComponent},
     { path:'orders', component: OrderComponent, canActivate:[AuthGuardFn] },

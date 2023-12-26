@@ -61,7 +61,7 @@ public class OrderResponse {
     @JsonProperty("order_details")
     private List<OrderDetail> orderDetails;
 
-    public static OrderResponse fromOrder(Order order) {
+    public static OrderResponse  fromOrder(Order order) {
         OrderResponse orderResponse =  OrderResponse
                 .builder()
                 .id(order.getId())

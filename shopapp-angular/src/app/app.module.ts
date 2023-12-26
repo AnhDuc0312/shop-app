@@ -19,6 +19,8 @@ import { UserProfileComponent } from './components/user-profile/user.profile.com
 import { OrderDetailComponent } from './components/detail-order/order.detail.component';
 import { CommonModule } from '@angular/common';
 import { AdminModule } from './components/admin/admin.module';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminRoutingModule } from './components/admin/admin-routing.module';
 
 
 
@@ -34,7 +36,8 @@ import { AdminModule } from './components/admin/admin.module';
     OrderDetailComponent, 
     DetailProductComponent,
     UserProfileComponent,
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
   
@@ -44,7 +47,8 @@ import { AdminModule } from './components/admin/admin.module';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    AdminRoutingModule
   
     
   ],

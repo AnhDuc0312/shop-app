@@ -49,7 +49,7 @@ public class OrderController {
 
     }
 
-    @GetMapping("user/{user_id}")
+    @GetMapping("/user/{user_id}")
     public ResponseEntity<?> getOrders(
             @Valid @PathVariable("user_id") Long userId
     ){

@@ -40,6 +40,8 @@ export class HeaderComponent {
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();  
       this.router.navigate(['']);  
+    }else {
+      this.router.navigate(['/orders/:id'])
     }
     this.isPopoverOpen = false;     
   }

@@ -180,7 +180,7 @@ public class ProductController {
                 .totalPages(totalPages)
                 .build());
     }
-    //http://localhost:8088/api/v1/products/6
+    //http://localhost:8088/api/v1/products/id
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(
             @PathVariable("id") Long productId
